@@ -3,7 +3,13 @@
     <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-          <img :src="logo" alt="Knoman: manager for your web knowledge">
+        <!--
+          <img src="chrome-extension://__MSG_@@extension_id__/images/icon-128.png" alt="Knoman: manager for your web knowledge" width="112" height="28">
+          <img src="chrome-extension://pkjiiacndminmhofjeggfkbheibkaeag/images/logo.png" alt="Knoman: manager for your web knowledge">
+          <img src="../icons/logo.png" alt="Knoman: manager for your web knowledge">
+          <img src="chrome-extension://jlcdpcbbndofcebdhbjdnknommfdabbc/icons/logo.png" alt="Knoman: manager for your web knowledge">
+        -->
+          <img src="../icons/logo.png" alt="Knoman: manager for your web knowledge">
         </a>
         <div class="navbar-burger burger" data-target="navMenu">
           <span></span>
@@ -63,9 +69,7 @@
 <script>
 export default {
   data () {
-    return {
-      logo: '../icons/logo.png'
-    }
+    return {}
   }
 }
 </script>
