@@ -31,7 +31,7 @@ export default {
 .vue-splitter {
     height: 100vh;
 }
-.vue-splitter > .splitter {
+.splitter {
     width: 1px;
 }
 </style>

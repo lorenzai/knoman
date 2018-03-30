@@ -1,5 +1,6 @@
 import * as $ from 'jquery'
-import config from './config'
+// import config from './config'
+import config from '../ext/constants'
 
 const port = chrome.runtime.connect()
 const REST_API_BASE = config.REST_API_BASE
@@ -103,6 +104,7 @@ function sentQueryInfo (url) {
 }
 
 function load () {
+  console.log('knoman content js started')
   init()
   sentQueryInfo(window.location.href)
   // port.postMessage({

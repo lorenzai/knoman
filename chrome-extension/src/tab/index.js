@@ -3,13 +3,20 @@ import root from './knoman.vue'
 import Bulma from 'bulma'
 import 'font-awesome/css/font-awesome.min.css'
 
+import VueBlu from 'vue-blu'
+import 'vue-blu/dist/css/vue-blu.min.css'
+
 import Router from 'vue-router'
 import Blacklists from './blacklists.vue'
-import Display from './display.vue'
+import Graphs from './graphs.vue'
+import Cards from './cards.vue'
+import Researches from './researches.vue'
+import Searches from './searches.vue'
 
 Vue.config.productionTip = false
 Vue.use(Bulma)
 Vue.use(Router)
+Vue.use(VueBlu)
 
 let router = new Router({
   // mode: 'history',
@@ -21,9 +28,26 @@ let router = new Router({
       component: Blacklists
     },
     {
-      path: '/display',
-      name: 'display',
-      component: Display
+      path: '/researches',
+      name: 'researches',
+      component: Researches,
+      props: true
+    },
+    {
+      path: '/searches',
+      name: 'searches',
+      component: Searches,
+      props: true
+    },
+    {
+      path: '/websites',
+      name: 'websites',
+      component: Cards
+    },
+    {
+      path: '/graphs',
+      name: 'graphs',
+      component: Graphs
     }
   ]
 })

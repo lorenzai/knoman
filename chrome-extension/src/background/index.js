@@ -15,7 +15,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion)
 })
 
-// chrome.browserAction.setBadgeText({text: 'KM'});
+// chrome.browserAction.setBadgeText({text: 'KM'})
 
 // Need to remove "default_popup": "pages/popup.html" from manifest.json
 // for the following to work
@@ -61,6 +61,14 @@ function init () {
         user = request.user
         token = request.token
         chrome.storage.local.remove(['user', 'token'])
+        return
+      }
+      if (request.from === 'knoman') {
+        sendResponse({
+          type: 'onKnoman',
+          user: user,
+          token: token
+        })
       }
     }
   )
