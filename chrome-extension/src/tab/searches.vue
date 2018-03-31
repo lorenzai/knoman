@@ -7,9 +7,16 @@
         <InfinitList :pToken='token' category='searches' :limit='40' contentName='query' @show='showDetail'></InfinitList>
       </div>
       <div class="column websites">
-        <div v-for="(item, key) in websites">
-          {{ item }} 
-        </div>
+        <a v-for="(item, key) in websites">
+          <div class="website">
+            <h2>{{ item.url }}</h2>
+            <small>
+              <span>Created at {{ item.created }} </span>
+              <span> Last visited at {{ item.lastVisited || item.created }}</span>
+              <span> Visited {{ item.visited }} times</span>
+            </small>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -57,5 +64,10 @@ export default {
 <style lang="css" scoped>
 .column.websites {
     border: solid 1px #707070;
+}
+.website {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #707070;
 }
 </style>
