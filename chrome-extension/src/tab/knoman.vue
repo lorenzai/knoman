@@ -119,8 +119,8 @@ export default {
     }.bind(this))
   },
   events: {
-    loading () {
-      console.log('loading is done')
+    show (item) {
+      console.log('loading is done:' + JSON.stringify(item))
     }
   }
 }
@@ -137,6 +137,7 @@ export default {
   border-right: 0.5px solid #f1f1f1;
 }
 .contents {
+  margin: 10px;
   padding: 20px;
   height: 100%;
   min-height: 100vh;
