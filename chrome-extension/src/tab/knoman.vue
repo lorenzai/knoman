@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div class="all">
     <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
@@ -31,31 +31,6 @@
     <div class="columns" style="background-color: #f0f0f0;">
       <div class="column is-2">
         <!-- 2/12 -->
-        <!-- <aside class="menu">
-          <p class="menu-label">
-            General
-          </p>
-          <ul class="menu-list">
-            <li>
-              <router-link :to="{ name: 'blacklists' }">
-                <i class="fa fa-ban fa-fw"></i>
-                Blacklists
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="{ name: 'cards' }">
-                <i class="fa fa-connectdevelop fa-fw"></i>
-                Websites 
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="{ name: 'graphs' }">
-                <i class="fa fa-connectdevelop fa-fw"></i>
-                knowledge Graph
-              </router-link>
-            </li>
-          </ul>
-        </aside> -->
         <div class="menu">
           <menus label="Administration">
             <menu-item icon="ban" :to="{ name: 'blacklists' }">Blacklists</menu-item>
@@ -127,18 +102,17 @@ export default {
 </script>
 
 <style lang="css" scoped>
+/* .all {
+  max-width: 100%;
+  overflow-x: hidden;
+} */
 .menu {
   height: 100%;
   min-height: 100vh;
 }
-.sidebar {
-  height: 100%;
-  background-color: #f7f7f7;
-  border-right: 0.5px solid #f1f1f1;
-}
 .contents {
-  margin: 10px;
-  padding: 20px;
+  margin-top: 20px;
+  margin-right: 20px;
   height: 100%;
   min-height: 100vh;
 }

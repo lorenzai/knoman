@@ -12,6 +12,16 @@
       </div>
       </collapse>
     </div>
+    <!-- <collapse accordion>
+      <div v-for="(item, key) in items" :class="{ active: isActive[key] }">
+        <collapse-item :title="item.content">
+          <div @click="show(item, key)">
+            <div>Created at {{ item.created }} </div>
+            <div>Visited {{ item.visited }} times</div>
+          </div>
+        </collapse-item>
+      </div>
+    </collapse> -->
     <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading" spinner="bubbles" :distance="0">
         <span slot="no-more">
         There is no more {{ category }} :)
@@ -92,6 +102,9 @@ export default {
 }
 .column {
   display: flex;
+}
+collapse {
+  padding-left: 0px;
 }
 .active {
   background-color: forestgreen

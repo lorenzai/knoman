@@ -3,7 +3,7 @@
     <!-- <b-aside :is-show="isShowAside" :title="item.content" :show-footer="false" placement="right" :backdrop="false" @close="isShowAside=false" :width="600"> -->
     <!-- </b-aside> -->
     <div class="columns">
-      <div class="column is-5">
+      <div class="column is-5 searches">
         <SearchList :pToken='token' category='searches' :limit='40' contentName='query' @show='showDetail'></SearchList>
       </div>
       <div class="column websites">
@@ -71,6 +71,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.column.searches {
+    padding: 0px;
+    margin-right: 0px;
+}
 .column.websites {
     border: solid 1px #707070;
     background-color: white;
