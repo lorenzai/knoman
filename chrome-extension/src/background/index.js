@@ -1,5 +1,11 @@
-var lastSearch = {}
-var lastURL = {}
+var lastSearch = {
+  query: '',
+  timestamp: 0
+}
+var lastURL = {
+  content: '',
+  timestamp: 0
+}
 var research = ''
 var user = {
   // name: 'Lorenzai Knoman',
@@ -79,9 +85,9 @@ function init () {
       }
       if (msg.search) {
         msg.data.research = research
-        msg.data.lastURL = lastURL
+        msg.data.lastURL = { ...lastURL }
         lastSearch = {
-          query: msg.data.content,
+          query: msg.data.query,
           timestamp: (new Date()).getTime()
         }
         port.postMessage({
@@ -93,8 +99,8 @@ function init () {
       }
       if (msg.website) {
         msg.data.research = research
-        msg.data.search = lastSearch
-        msg.data.lastURL = lastURL
+        msg.data.search = { ...lastSearch }
+        msg.data.lastURL = { ...lastURL }
         lastURL = {
           content: msg.data.url,
           timestamp: (new Date()).getTime()
