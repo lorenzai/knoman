@@ -1,16 +1,34 @@
 <template lang="html">
   <div>
     <div class="columns is-multiline is-gapless">
-      <collapse>
       <div class="column list-item" v-for="(item, key) in items">
-        <collapse-item :title="item.content">
-          <a @click="show(item, key)">
-            <div>Created at {{ item.created }} </div>
-            <div>Visited {{ item.visited }} times</div>
-          </a>
-        </collapse-item>
+        <a @click="show(item, key)">
+        <div class="card" :class="{ active: isActive[key] }">
+            <header class="card-header">
+                <div class="media">
+                <div class="media-left">
+                    <figure class="image is-48x48">
+                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="card-header-title">
+                    <small>
+                      <div>Created at {{ item.created }} </div>
+                      <div>Visited {{ item.visited }} times</div>
+                    </small>
+                    </p>
+                </div>
+                </div>          
+            </header>
+            <div class="card-content">
+              <p class="content">
+                {{ item.content }}
+              </p>
+            </div>
+        </div>
+        </a>
       </div>
-      </collapse>
     </div>
     <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading" spinner="bubbles" :distance="0">
         <span slot="no-more">

@@ -4,7 +4,7 @@
     <!-- </b-aside> -->
     <div class="columns">
       <div class="column is-5">
-        <InfinitList :pToken='token' category='searches' :limit='40' contentName='query' @show='showDetail'></InfinitList>
+        <SearchList :pToken='token' category='searches' :limit='40' contentName='query' @show='showDetail'></SearchList>
       </div>
       <div class="column websites">
         <a v-for="(item, key) in websites">
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import InfinitList from './component/infinitList'
+import SearchList from './component/infinitList'
 import axios from 'axios'
 import constants from '../ext/constants'
 axios.defaults.baseURL = constants.REST_API_BASE
@@ -56,7 +56,7 @@ export default {
     }
   },
   components: {
-    InfinitList
+    SearchList
   }
 }
 </script>
