@@ -67,7 +67,8 @@ function isSearchEngine (url) {
 
 function sentQueryInfo (url) {
   let query = getParameterByName(url, 'q') || getParameterByName(url, 'p')
-  console.log('url:' + url)
+  console.log('url: ' + url)
+  console.log('isSearchEngine: ' + isSearchEngine(url))
   if (!query && !isSearchEngine(url)) {
     console.log('plain website')
     console.log('referer:' + document.referrer)

@@ -9,7 +9,7 @@
       <div class="column websites">
         <a v-for="(item, key) in websites">
           <div class="website">
-            <h2>{{ item.url }}</h2>
+            <h2>{{ item.url | truncate }}</h2>
             <small>
               <span>Created at {{ item.created }} </span>
               <span> Last visited at {{ item.lastVisited || item.created }}</span>
@@ -24,6 +24,7 @@
 
 <script>
 import SearchList from './component/infinitList'
+import truncateString from '../ext/utils'
 import axios from 'axios'
 import constants from '../ext/constants'
 axios.defaults.baseURL = constants.REST_API_BASE
@@ -35,6 +36,14 @@ export default {
       item: { content: '' },
       websites: [],
       isShowAside: false
+    }
+  },
+  filters: {
+    capitalize (v) {
+      return v.charAt(0).toUpperCase() + v.slice(1)
+    },
+    truncate (s) {
+      return truncateString.apply(s, [80, false])
     }
   },
   methods: {
@@ -64,6 +73,7 @@ export default {
 <style lang="css" scoped>
 .column.websites {
     border: solid 1px #707070;
+    background-color: white;
 }
 .website {
     padding-bottom: 10px;

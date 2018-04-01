@@ -1,13 +1,13 @@
 <template lang="html">
   <div>
     <div class="columns is-multiline is-gapless">
-      <collapse>
-      <div class="column list-item" v-for="(item, key) in items">
+      <collapse accordion>
+      <div class="column list-item" v-for="(item, key) in items" :class="{ active: isActive[key] }">
         <collapse-item :title="item.content">
-          <a @click="show(item, key)">
+          <div @click="show(item, key)">
             <div>Created at {{ item.created }} </div>
             <div>Visited {{ item.visited }} times</div>
-          </a>
+          </div>
         </collapse-item>
       </div>
       </collapse>
