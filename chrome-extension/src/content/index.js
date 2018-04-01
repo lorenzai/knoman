@@ -59,7 +59,7 @@ function getSearchEngine (url) {
 }
 
 function isSearchEngine (url) {
-  return url === 'https://www.google.com' ||
+  return url.startsWith('https://www.google.com') ||
          url.startsWith('https://notifications.google.com') ||
          url.startsWith('https://search.yahoo.com') ||
          url.startsWith('https://www.bing.com')
