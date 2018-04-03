@@ -52,7 +52,7 @@
               </menus> -->
           </menus>
           <menus label="Contents">
-            <menu-item icon="list">
+            <menu-item icon="list" :is-active="true">
               <span>Category</span>
               <menus slot="sub">
                 <menu-item icon="object-group" :to="{ name: 'researches', params: { token: token.content } }">Researches</menu-item>
@@ -71,7 +71,7 @@
       </div>
     </div>
     </div> <!-- main -->
-    <div class="foot">
+    <div class="footer">
     </div>
   </div>
 </template>
@@ -102,22 +102,31 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/* .all {
-  max-width: 100%;
+.all {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   overflow-x: hidden;
-} */
+}
 .menu {
   height: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 20px);
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 .contents {
-  margin-top: 20px;
-  margin-right: 20px;
-  height: 100%;
-  min-height: 100vh;
+  margin-left: 0px;
+  padding-left: 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  /* min-height: 100%; */
+  flex-grow: 1;
+  flex-shrink: 0;
 }
-.foot {
-  min-height: 100px;
-  background-color: white;
+.footer {
+  min-height: 10px;
+  background-color: grey;
+  flex-shrink: 0;
 }
 </style>
