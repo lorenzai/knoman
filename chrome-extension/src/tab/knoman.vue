@@ -85,8 +85,9 @@ export default {
       logo: '../icons/logo.png'
     }
   },
-  created () {
+  mounted () {
     chrome.runtime.sendMessage({ from: 'knoman' }, function (response) {
+      console.log('Response from background:' + JSON.stringify(response))
       if (response && response.type === 'onKnoman') {
         this.user = response.user.username
         this.token = response.token

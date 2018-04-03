@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="infinit-wrapper">
-  <div class="infinit-inner" v-el:scroll-container>
+  <!-- <div class="infinit-inner" v-el:scroll-container> -->
+  <div class="infinit-inner">
     <!-- <div class="columns is-multiline is-gapless">
       <collapse accordion>
       <div class="column list-item" v-for="(item, key) in items" :class="{ active: isActive[key] }">

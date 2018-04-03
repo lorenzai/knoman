@@ -67,16 +67,20 @@ export default {
   props: ['token'],
   data () {
     return {
-      // search: { query: '' },
       websites: [],
       website: '',
-      asideWidth: 0.75 * screen.width,
-      iframeWidth: 0.75 * screen.width - 40,
+      asideWidth: 0,
+      iframeWidth: 0,
       isShow: false,
       isShowAside: false
     }
   },
   mounted () {
+    this.$nextTick(function () {
+      window.addEventListener('resize', this.getAsideWidth)
+      // Init
+      this.getAsideWidth()
+    }.bind(this))
     let sizes = localStorage.getItem('split-sizes')
     if (sizes) {
       sizes = JSON.parse(sizes)
@@ -139,6 +143,11 @@ export default {
         this.websites = data
       })
     },
+    getAsideWidth (event) {
+      const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+      this.asideWidth = 0.75 * windowWidth
+      this.iframeWidth = 0.75 * windowWidth - 40
+    },
     deleteSearch (search) {
       axios.delete('/node/search', {
         headers: {
@@ -152,6 +161,9 @@ export default {
         console.log(data)
       })
     }
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.getAsideWidth)
   },
   components: {
     SearchList
