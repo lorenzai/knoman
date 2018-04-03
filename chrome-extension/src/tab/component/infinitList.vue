@@ -5,7 +5,8 @@
       <div class="column list-item" v-for="(item, key) in items" :class="{ active: isActive[key] }">
         <collapse-item :title="item.content">
           <div @click="show(item, key)">
-            <div>Created at {{ item.created }} </div>
+            <div>Created at {{ item.created | format }} </div>
+            <div>Last visited at {{ item.lastVisited || item.created | format }} </div>
             <div>Visited {{ item.visited }} times</div>
           </div>
         </collapse-item>
@@ -34,6 +35,7 @@
 import InfiniteLoading from 'vue-infinite-loading'
 import axios from 'axios'
 import constants from '../../ext/constants'
+import { formatTime } from '../../ext/utils'
 axios.defaults.baseURL = constants.REST_API_BASE
 
 export default {
@@ -47,6 +49,11 @@ export default {
     return {
       isActive: [],
       items: []
+    }
+  },
+  filters: {
+    format (epoch) {
+      return formatTime(epoch / 1000.0, 'DD MMM YYYY HH:mm')
     }
   },
   methods: {
@@ -82,7 +89,7 @@ export default {
             isActive.push(false)
           })
           this.items = this.items.concat(items)
-          this.isActive = isActive
+          this.isActive = this.isActive.concat(isActive)
           $state.loaded()
         } else {
           $state.complete()

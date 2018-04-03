@@ -125,15 +125,21 @@ function init () {
   chrome.webRequest.onHeadersReceived.addListener(
     function (details) {
       for (var i = 0; i < details.responseHeaders.length; ++i) {
-        if (details.responseHeaders[i].name.toLowerCase() === 'x-frame-options') {
+        if (details.responseHeaders[i].name.toLowerCase() === 'x-frame-options' ||
+          details.responseHeaders[i].name.toLowerCase() === 'content-security-policy') {
           details.responseHeaders.splice(i, 1)
-          return {
-            responseHeaders: details.responseHeaders
-          }
         }
+        // if (details.responseHeaders[i].name.toLowerCase() === 'content-security-policy') {
+        //   let newValue = details.responseHeaders[i].value.replace('frame-ancestors "none";', '')
+        //   details.responseHeaders[i].value = newValue
+        // }
+      }
+      return {
+        responseHeaders: details.responseHeaders
       }
     }, {
-      urls: ['<all_urls>']
+      urls: ['<all_urls>'],
+      types: ['main_frame', 'sub_frame', 'stylesheet', 'script', 'image', 'object', 'xmlhttprequest', 'other']
     }, ['blocking', 'responseHeaders']
   )
 }

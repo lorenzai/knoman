@@ -12,6 +12,8 @@
     "element-ui": "^2.0.1",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
+    "moment": "^2.22.0",
+    "split.js": "^1.3.5",
     "vue": "^2.5.2",
     "vue-blu": "^0.1.9",
     "vue-infinite-loading": "^2.2.3",
