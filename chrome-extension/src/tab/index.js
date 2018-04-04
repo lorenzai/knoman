@@ -13,10 +13,14 @@ import Cards from './cards.vue'
 import Researches from './researches.vue'
 import Searches from './searches.vue'
 
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
 Vue.config.productionTip = false
 Vue.use(Bulma)
 Vue.use(Router)
 Vue.use(VueBlu)
+Vue.use(Vuetify)
 
 let router = new Router({
   // mode: 'history',
