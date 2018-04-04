@@ -41,6 +41,11 @@ function init () {
     function (request, sender, sendResponse) {
       if (request.pauseKnoman) {
         pauseKnoman = request.state
+        if (pauseKnoman) {
+          chrome.browserAction.setBadgeText({text: 'P'})
+        } else {
+          chrome.browserAction.setBadgeText({text: ''})
+        }
         return
       }
       if (request.popupMounted) {

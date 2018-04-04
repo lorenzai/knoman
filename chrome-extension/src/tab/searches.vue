@@ -9,7 +9,7 @@
       <h2>
         <a target="_blank" :href="website.url">View the website in a new tab: {{ website.url }}</a>
       </h2>
-      <iframe id="iframe" :src="website.url" :width="iframeWidth" height="400" scrolling="yes" frameborder="0"></iframe>
+      <iframe id="iframe" :src="website.url" :width="iframeWidth" height="600" scrolling="yes" frameborder="0"></iframe>
     </b-aside>
     <!-- <div class="columns">
       <div class="column is-5 searches">
