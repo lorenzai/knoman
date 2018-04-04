@@ -33,16 +33,16 @@
       </div>
     </div> -->
     <div id="left" class="searches">
-      <SearchList :pToken='token' category='searches' :limit='40' contentName='query' @show='showWebsites' @deleteItem='deleteSearch'></SearchList>
+      <SearchList :pToken='localToken' category='searches' :limit='40' contentName='query' @show='showWebsites' @deleteItem='deleteSearch'></SearchList>
     </div>
     <div id="right" class="websites">
       <div v-for="(item, key) in websites">
         <div class="website">
-          <h2>
+          <h4>
           <a @click="showWebsite(item)">
             {{ item.url | truncate }}
           </a>
-          </h2>
+          </h4>
           <small>
             <span>Created at {{ item.created | format }} </span> |
             <span> Last visited at {{ item.lastVisited || item.created | format }}</span> |
@@ -75,7 +75,22 @@ export default {
       isShowAside: false
     }
   },
+  computed: {
+    localToken: {
+      get: function () {
+        if (this.token) {
+          return this.token
+        } else {
+          return localStorage.getItem('localToken')
+        }
+      }
+    }
+  },
   mounted () {
+    // save token to local storage so that browser refresh works
+    if (this.token) {
+      localStorage.setItem('localToken', this.localToken)
+    }
     this.$nextTick(function () {
       window.addEventListener('resize', this.getAsideWidth)
       // Init
@@ -134,7 +149,7 @@ export default {
       axios.get('/nodes/searches/websites', {
         headers: {
           'content-type': 'application/json',
-          'authorization': 'JWT ' + this.token
+          'authorization': 'JWT ' + this.localToken
         },
         params: {
           query: search.query
@@ -152,7 +167,7 @@ export default {
       axios.delete('/node/search', {
         headers: {
           'content-type': 'application/json',
-          'authorization': 'JWT ' + this.token
+          'authorization': 'JWT ' + this.localToken
         },
         params: {
           query: search.query
@@ -186,7 +201,8 @@ export default {
     background-color: white;
     /* height: 700px; */
     height: calc(100vh - 60px);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .website {
     padding: 10px;
