@@ -3,7 +3,7 @@
     <div>{{ message | capitalize }}</div>
     <div v-if="login">
       <div class="field">
-        <button class="button is-danger is-median is-pulled-right" @click="logoutUser()">Log Out</button>
+        <button class="button is-danger is-small is-pulled-right" @click="logoutUser()">Log Out</button>
         <div>{{ input.username }}</div>
       </div>
     </div>

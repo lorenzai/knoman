@@ -1,5 +1,5 @@
 <template lang="html">
-  <div id="search-page">
+  <div id="page">
     <!-- <b-aside :is-show="isShowAside" :title="search.content" :show-footer="false" placement="right" :backdrop="false" @close="isShowAside=false" :width="600"> -->
     <!-- </b-aside> -->
     <!-- <modal :title="website.url" :width="900" :is-show="isShow" transition="fadeDown" :show-footer="false" @close="isShow=false">
@@ -78,7 +78,7 @@ export default {
   computed: {
     localToken: {
       get: function () {
-        if (this.token) {
+        if (this.token || this.token === '') {
           return this.token
         } else {
           return localStorage.getItem('localToken')
@@ -88,7 +88,7 @@ export default {
   },
   mounted () {
     // save token to local storage so that browser refresh works
-    if (this.token) {
+    if (this.token || this.token === '') {
       localStorage.setItem('localToken', this.localToken)
     }
     this.$nextTick(function () {
@@ -213,7 +213,7 @@ export default {
 iframe {
     border: solid 1px #707070;
 }
-#search-page {
+#page {
     display: flex;
     flex-direction: row;
 }
