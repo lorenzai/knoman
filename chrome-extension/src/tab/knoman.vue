@@ -27,8 +27,8 @@
             v-else-if="item.children"
             v-model="item.model"
             :key="item.text"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
+            :prepend-icon="item['icon-prepend']"
+            :append-icon="item.model ? item.icon : item['icon-alt']"
           >
             <v-list-tile slot="activator">
               <v-list-tile-content>
@@ -42,8 +42,8 @@
               :key="i"
               @click="clickedChild(item, child, i)"
             >
-              <v-list-tile-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
+              <v-list-tile-action>
+                <v-icon v-if="child.icon">{{ child.icon }}</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title>
@@ -63,12 +63,13 @@
             </v-list-tile-content>
           </v-list-tile>
         </template>
-        <v-divider></v-divider>
+        <!-- <v-divider></v-divider> -->
       </v-list>
     </v-navigation-drawer>
     <v-toolbar
       color="teal darken-1"
       dark
+      flat
       app
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       fixed
@@ -121,19 +122,20 @@ export default {
     return {
       user: '',
       token: {},
-      logo: '../icons/icon-128.png',
+      logo: '../icons/icon-white-2.png',
       drawer: null,
       items: [
         { icon: 'fa-ban', text: 'Blacklists', name: 'blacklists' },
         {
           icon: 'keyboard_arrow_up',
           'icon-alt': 'keyboard_arrow_down',
-          text: 'Main Contents',
+          'icon-prepend': 'fa-object-group',
+          text: 'Main Categories',
           model: true,
           children: [
-            { icon: 'fa-object-group', text: 'Researches', name: 'researches' },
-            { icon: 'fa-search', text: 'Searches', name: 'searches' },
-            { icon: 'fa-internet-explorer', text: 'Websites', name: 'websites' }
+            { text: 'Researches', name: 'researches' },
+            { text: 'Searches', name: 'searches' },
+            { text: 'Websites', name: 'websites' }
           ]
         },
         { icon: 'fa-connectdevelop', text: 'Knowledge Graphs', name: 'graphs' }

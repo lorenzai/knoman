@@ -146,7 +146,8 @@ export default {
 } */
 .active {
   color: white;
-  background-color: rgba(0,0,200, 0.6)
+  /* background-color: rgba(0, 193, 200, 0.6); */
+  background-color: #1DE9B6;
 }
 .infinit-wrapper {
   /* width: 301px; */

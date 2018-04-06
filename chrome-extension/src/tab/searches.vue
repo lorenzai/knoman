@@ -38,11 +38,11 @@
     <div id="right" class="websites">
       <div v-for="(item, key) in websites">
         <div class="website">
-          <h4>
+          <div>
           <a @click="showWebsite(item)">
             {{ item.url | truncate }}
           </a>
-          </h4>
+          </div>
           <small>
             <span>Created at {{ item.created | format }} </span> |
             <span> Last visited at {{ item.lastVisited || item.created | format }}</span> |
