@@ -9,18 +9,22 @@ import 'vue-blu/dist/css/vue-blu.min.css'
 import Router from 'vue-router'
 import Blacklists from './blacklists.vue'
 import Graphs from './graphs.vue'
-import Cards from './cards.vue'
+import Websites from './websites.vue'
 import Researches from './researches.vue'
 import Searches from './searches.vue'
 
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+// import { MdAutocomplete } from '../../node_modules/vue-material/dist/components'
+// import 'vue-material/dist/vue-material.min.css'
+
 Vue.config.productionTip = false
 Vue.use(Bulma)
 Vue.use(Router)
 Vue.use(VueBlu)
 Vue.use(Vuetify)
+// Vue.use(MdAutocomplete)
 
 let router = new Router({
   // mode: 'history',
@@ -46,7 +50,7 @@ let router = new Router({
     {
       path: '/websites',
       name: 'websites',
-      component: Cards
+      component: Websites
     },
     {
       path: '/graphs',

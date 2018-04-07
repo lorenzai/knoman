@@ -17,7 +17,7 @@
     </div> -->
     <collapse accordion>
       <div v-for="(item, key) in items">
-        <collapse-item :title="item.content" :class="{ active: isActive[key] }">
+        <collapse-item :title="(item.title || item.content) | truncate" :class="{ active: isActive[key] }">
           <div>
             <span>Created at {{ item.created | format }}</span> |
             <span>Last visited at {{ item.lastVisited || item.created | format }} </span> | 
@@ -39,9 +39,9 @@
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
+import { truncate as truncateString, formatTime } from '../../ext/utils'
 import axios from 'axios'
 import constants from '../../ext/constants'
-import { formatTime } from '../../ext/utils'
 axios.defaults.baseURL = constants.REST_API_BASE
 
 export default {
@@ -76,6 +76,9 @@ export default {
   filters: {
     format (epoch) {
       return formatTime(epoch / 1000.0, 'DD MMM YYYY HH:mm')
+    },
+    truncate (s) {
+      return truncateString.apply(s, [60, false])
     }
   },
   methods: {

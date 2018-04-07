@@ -7,7 +7,7 @@
     </modal> -->
     <b-aside :is-show="isShow" :title="website.url" :show-footer="false" placement="right" :backdrop="true" @close="isShow=false" :width="asideWidth">
       <h2>
-        <a target="_blank" :href="website.url">View the website in a new tab: {{ website.url }}</a>
+        <a target="_blank" :href="website.url">View the website in a new tab: {{ website.title || website.url }}</a>
       </h2>
       <iframe id="iframe" :src="website.url" :width="iframeWidth" height="600" scrolling="yes" frameborder="0"></iframe>
     </b-aside>
@@ -40,7 +40,7 @@
         <div class="website">
           <div>
           <a @click="showWebsite(item)">
-            {{ item.url | truncate }}
+            {{ (item.title || item.url) | truncate }}
           </a>
           </div>
           <small>
@@ -187,6 +187,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+#page {
+    display: flex;
+    flex-direction: row;
+}
 .searches {
     border: solid 1px green;
     background-color: white;
@@ -212,10 +216,6 @@ export default {
 }
 iframe {
     border: solid 1px #707070;
-}
-#page {
-    display: flex;
-    flex-direction: row;
 }
 
 .gutter {
