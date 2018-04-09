@@ -1,22 +1,40 @@
 <template lang="html">
-  <div>
-    <div>{{ message | capitalize }}</div>
-    <div v-if="login">
-      <div class="field">
-        <button class="button is-danger is-small is-pulled-right" @click="logoutUser()">Log Out</button>
-        <div>{{ input.username }}</div>
-      </div>
-    </div>
-    <div v-else>
-      <div class="field is-grouped">
-        <input class="input" type="email" v-model="input.username" placeholder="email" />
-        <input class="input" type="password" v-model="input.password" placeholder="password" />
-      </div>
-      <div class="field is-grouped">
-        <button class="button is-primary is-outlined" v-on:click="loginUser()">Sign In</button>
-        <button class="button is-danger is-outlined is-pulled-right" v-on:click="registerUser()">Register</button>
-      </div>
-    </div>
+  <div class="login">
+    <v-layout row wrap>
+      <v-flex xs12 class="login-message">
+        <div>{{ message | capitalize }}</div>
+      </v-flex>
+      <v-layout v-if="login" row>
+        <v-flex d-flex xs12>
+          <v-text-field
+            class="teal--text"
+            flat
+            single-line
+            solo
+            readonly
+            :value="input.username"
+            prepend-icon="fa fa-user-circle-o fa-2x"
+            append-icon="fa fa-sign-out fa-2x"
+            :append-icon-cb="logoutUser"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout v-else row wrap class="px-3 py-3">
+        <v-flex d-flex xs12 class="pb-3">
+          <input class="input" type="email" v-model="input.username" placeholder="email" autofocus />
+        </v-flex>
+        <v-flex d-flex xs12 class="pb-3">
+          <input class="input" type="password" v-model="input.password" placeholder="password" />
+        </v-flex>
+        <v-flex d-flex xs4>
+          <button class="button is-primary is-outlined" v-on:click="loginUser()">Sign In</button>
+        </v-flex>
+        <v-spacer></v-spacer>
+        <v-flex d-flex xs4 align-end>
+          <button class="button is-danger is-outlined is-pulled-right" v-on:click="registerUser()">Register</button>
+        </v-flex>
+      </v-layout>
+    </v-layout>
   </div>
 </template>
 
@@ -114,4 +132,10 @@ export default {
 </script>
 
 <style lang="css">
+.login {
+  padding: 16px 0 16px 0;
+}
+.login-message {
+  padding: 16px 16px 0 16px;
+}
 </style>
