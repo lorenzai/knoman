@@ -163,6 +163,6 @@ export default {
   /* height: 680px; */
   height: calc(100vh - 62px);
   overflow: auto;
-  overscroll-behavior: contain;
+  /* overscroll-behavior: contain; */
 }
 </style>
