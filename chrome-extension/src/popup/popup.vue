@@ -27,18 +27,18 @@
               class="indigo--text"
               name="research"
               id="research"
-              prefix="Research: "
-              multi-line
-              rows=3
+              label="Set research topic with enter"
+              single-line
+              rows=1
               solo
               flat
               autofocus
-              readonly
-              :value="research"
+              v-model="research"
               prepend-icon="fa fa-gear fa-2x"
               :prepend-icon-cb="settingResearchTopic"
               append-icon="fa fa-times-circle-o fa-2x"
               :append-icon-cb="clearResearchTopic"
+              @keyup.native.enter="setResearchTopic"
             ></v-text-field>
           </v-flex>
         </v-layout>
@@ -112,6 +112,9 @@
 <script>
 import Login from './login.vue'
 import ResearchAdd from './researchAdd.vue'
+import axios from 'axios'
+import constants from '../ext/constants'
+axios.defaults.baseURL = constants.REST_API_BASE
 
 export default {
   data () {
@@ -119,14 +122,17 @@ export default {
       logo: '../icons/icon-128.png',
       // knoman_toggle_icon: 'fa fa-toggle-on fa-2x',
       knoman_toggle_icon: 'fa fa-pause-circile-o fa-2x',
-      research: 'NULL',
+      research: '',
       pauseState: false,
-      pauseMsg: ''
+      pauseMsg: '',
+      token: ''
     }
   },
   mounted () {
     chrome.runtime.sendMessage({ popupMounted: true }, function (response) {
       this.pauseState = response.state
+      this.research = response.research
+      this.token = response.token
       if (this.pauseState) {
         this.pauseMsg = 'Resume Knoman'
         // this.knoman_toggle_icon = 'fa fa-toggle-off fa-2x'
@@ -160,8 +166,36 @@ export default {
       }
     },
     settingResearchTopic () {
+      chrome.tabs.create({ url: 'pages/knoman.html#/researches' })
+    },
+    setResearchTopic () {
+      // chrome.runtime.sendMessage({ from: 'setResearch', data: this.research })
+      let topic = this.research
+      this.research = 'Setting research topic ...'
+      let token = this.token
+      console.log('this.research: ' + topic)
+      axios({
+        method: 'post',
+        url: '/node/research',
+        headers: {
+          'content-type': 'application/json; charset=utf-8',
+          'authorization': 'JWT ' + token
+        },
+        data: {
+          topic: topic
+        }
+      }).then(function ({ data }) {
+        console.log('Set research topic response: ' + JSON.stringify(data))
+        chrome.runtime.sendMessage({ from: 'setResearch', data: topic })
+        this.research = topic
+      }.bind(this)).catch(function (error) {
+        console.error('Set research topic:' + topic + '; return error:' + JSON.stringify(error))
+        this.research = ''
+      }.bind(this))
     },
     clearResearchTopic () {
+      this.research = ''
+      chrome.runtime.sendMessage({ from: 'setResearch', data: '' })
     }
   }
 }

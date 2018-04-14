@@ -148,7 +148,7 @@ export default {
       this.isShowAside = !this.isShowAside
       axios.get('/nodes/searches/websites', {
         headers: {
-          'content-type': 'application/json',
+          'content-type': 'application/json; charset=utf-8',
           'authorization': 'JWT ' + this.localToken
         },
         params: {
@@ -166,7 +166,7 @@ export default {
     deleteSearch (search) {
       axios.delete('/node/search', {
         headers: {
-          'content-type': 'application/json',
+          'content-type': 'application/json; charset=utf-8',
           'authorization': 'JWT ' + this.localToken
         },
         params: {

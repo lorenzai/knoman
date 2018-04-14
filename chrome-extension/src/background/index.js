@@ -33,9 +33,10 @@ function isExpired (expireTime) {
 }
 
 function init () {
-  chrome.storage.local.get({ user: user, token: token }, function (result) {
+  chrome.storage.local.get({ user: user, token: token, research: research }, function (result) {
     user = result.user
     token = result.token
+    research = result.research
   })
   chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
@@ -50,7 +51,9 @@ function init () {
       }
       if (request.popupMounted) {
         sendResponse({
-          state: pauseKnoman
+          state: pauseKnoman,
+          research: research,
+          token: token.content
         })
         return
       }
@@ -80,6 +83,11 @@ function init () {
           user: user,
           token: token
         })
+        return
+      }
+      if (request.from === 'setResearch') {
+        research = request.data
+        chrome.storage.local.set({ research: research })
       }
     }
   )

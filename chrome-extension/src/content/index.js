@@ -65,7 +65,7 @@ function isSearchEngine (url) {
          url.startsWith('https://www.bing.com')
 }
 
-function sentQueryInfo (url) {
+function sentInfo (url) {
   let query = getParameterByName(url, 'q') || getParameterByName(url, 'p')
   console.log('url: ' + url)
   console.log('isSearchEngine: ' + isSearchEngine(url))
@@ -107,7 +107,9 @@ function sentQueryInfo (url) {
 function load () {
   console.log('knoman content js started')
   init()
-  sentQueryInfo(window.location.href)
+  // delay sending web info for 3 seconds to exclude accidental click
+  // Todo: tuning the delay time
+  setTimeout((function (url) { sentInfo(url) })(window.location.href), 3000)
   // port.postMessage({
   //     history: true,
   //     url: window.location.href

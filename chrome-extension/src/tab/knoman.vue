@@ -97,7 +97,7 @@
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
-      <v-btn flat>{{ user }}</v-btn>
+      <v-btn flat>{{ user || 'Please Login' }}</v-btn>
       <v-btn icon large>
         <v-avatar size="32px" tile>
           <img

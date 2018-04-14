@@ -40,8 +40,9 @@
 
 <script>
 import axios from 'axios'
-const REST_API_BASE = 'https://resorttransport.corp.ne1.yahoo.com:4443/knoman/api/v1'
-axios.defaults.baseURL = REST_API_BASE + '/users'
+import constants from '../ext/constants'
+axios.defaults.baseURL = constants.REST_API_BASE
+
 export default {
   data () {
     return {
@@ -70,7 +71,7 @@ export default {
   },
   methods: {
     loginUser () {
-      axios.post('/login', this.input, {
+      axios.post('/users/login', this.input, {
         headers: {
           'content-type': 'application/json'
         }
@@ -109,7 +110,7 @@ export default {
         this.message = 'Please specify a valid password'
         return
       }
-      axios.post('/register', this.input, {
+      axios.post('/users/register', this.input, {
         headers: {
           'content-type': 'application/json'
         }

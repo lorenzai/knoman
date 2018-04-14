@@ -103,7 +103,7 @@ export default {
     infiniteHandler ($state) {
       axios.get('/nodes/' + this.category, {
         headers: {
-          'content-type': 'application/json',
+          'content-type': 'application/json; charset=utf-8',
           'authorization': 'JWT ' + this.pToken
         },
         params: {
@@ -150,7 +150,8 @@ export default {
 .active {
   color: white;
   /* background-color: rgba(0, 193, 200, 0.6); */
-  background-color: #1DE9B6;
+  /* background-color: #1DE9B6; */
+  border-left: solid 4px teal;
 }
 .infinit-wrapper {
   /* width: 301px; */

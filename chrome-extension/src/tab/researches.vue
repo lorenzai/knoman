@@ -9,7 +9,7 @@
 <script>
 import axios from 'axios'
 import constants from '../ext/constants'
-axios.defaults.baseURL = constants.REST_API_BASE + '/nodes'
+axios.defaults.baseURL = constants.REST_API_BASE
 
 export default {
   props: ['token'],
@@ -25,9 +25,9 @@ export default {
   },
   methods: {
     getResearches () {
-      axios.get('/researches', {
+      axios.get('/nodes/researches', {
         headers: {
-          'content-type': 'application/json',
+          'content-type': 'application/json; charset=utf-8',
           'authorization': 'JWT ' + this.token
         },
         params: {
