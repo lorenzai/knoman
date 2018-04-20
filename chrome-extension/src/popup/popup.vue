@@ -48,38 +48,46 @@
     <v-flex xs12>
       <v-card flat>
         <v-list dense class="pa-0 pb-0">
-          <v-list-tile class="elem" @click="">
+          <v-list-tile class="elem">
             <v-list-tile-action>
-              <!-- <span class="teal--text">
+              <span class="teal--text">
                 <i class="fa fa-ban fa-2x"></i>
-              </span> -->
+              </span>
             </v-list-tile-action>
             <v-list-tile-content>
-              <span class="teal--text subheading">
-                Block this page
+              <div class="blacklist-container">
+              <span class="subheading teal--text">
+                Block this
               </span>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile class="elem" @click="">
-            <v-list-tile-action>
-              <!-- <span class="teal--text">
-                <i class="fa fa-ban fa-2x"></i>
-              </span> -->
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <span class="teal--text subheading">
-                Block this domain
-              </span>
+              <v-btn
+                small
+                outline
+                disabled
+                color="teal white--text"
+                @click="blacklist()"
+              >
+                webpage
+              </v-btn>
+              <v-btn
+                small
+                depressed
+                disabled
+                color="teal white--text"
+                @click="blacklist(true)"
+              >
+                domain
+              </v-btn>
+              </div>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile class="elem" @click="pauseKnoman()">
             <v-list-tile-action>
-              <v-icon class="red--text">
+              <!-- <v-icon class="red--text">
                 {{knoman_toggle_icon}}
-              </v-icon>
-              <!-- <span class="red--text">
+              </v-icon> -->
+              <span class="red--text">
                 <i :class="knoman_toggle_icon"></i>
-              </span> -->
+              </span>
             </v-list-tile-action>
             <v-list-tile-content>
               <span class="red--text subheading">
@@ -120,7 +128,6 @@ export default {
   data () {
     return {
       logo: '../icons/icon-128.png',
-      // knoman_toggle_icon: 'fa fa-toggle-on fa-2x',
       knoman_toggle_icon: 'fa fa-pause-circile-o fa-2x',
       research: '',
       pauseState: false,
@@ -196,6 +203,9 @@ export default {
     clearResearchTopic () {
       this.research = ''
       chrome.runtime.sendMessage({ from: 'setResearch', data: '' })
+    },
+    blacklist (isDomain = false) {
+      chrome.runtime.sendMessage({ from: 'blacklist', isDomain: isDomain })
     }
   }
 }
@@ -220,5 +230,13 @@ export default {
 }
 .height {
   height: 40px;
+}
+.blacklist-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.blacklist-container > * {
+  align-self: center;
 }
 </style>

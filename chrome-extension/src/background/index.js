@@ -77,17 +77,33 @@ function init () {
         chrome.storage.local.remove(['user', 'token'])
         return
       }
-      if (request.from === 'knoman') {
-        sendResponse({
-          type: 'onKnoman',
-          user: user,
-          token: token
-        })
-        return
-      }
-      if (request.from === 'setResearch') {
-        research = request.data
-        chrome.storage.local.set({ research: research })
+      switch (request.from) {
+        case 'knoman':
+          sendResponse({
+            type: 'onKnoman',
+            user: user,
+            token: token
+          })
+          break
+        case 'setResearch':
+          research = request.data
+          chrome.storage.local.set({ research: research })
+          break
+        case 'blacklist':
+          chrome.tabs.query({ active: true, currentWindow: true }, function (currentTab) {
+            let tab = currentTab[0]
+            if (tab.incognito) {
+              return
+            }
+            // TODO: blacklist
+            // Save blacklist to variable
+            let item = {
+              content: tab.url,
+              isDomain: request.isDomain
+            }
+            console.log(item)
+          })
+          break
       }
     }
   )
