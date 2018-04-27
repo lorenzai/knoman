@@ -107,57 +107,62 @@ function init () {
       }
     }
   )
+
+  function sendToContentScript (port, msg) {
+    if (msg.search) {
+      msg.data.research = research
+      msg.data.lastURL = { ...lastURL }
+      lastSearch = {
+        query: msg.data.query,
+        timestamp: (new Date()).getTime()
+      }
+      port.postMessage({
+        onSearch: true,
+        token: token.content,
+        data: msg.data
+      })
+      return
+    }
+    if (msg.website) {
+      msg.data.research = research
+      msg.data.search = { ...lastSearch }
+      msg.data.lastURL = { ...lastURL }
+      lastURL = {
+        content: msg.data.url,
+        timestamp: (new Date()).getTime()
+      }
+      port.postMessage({
+        onWebsite: true,
+        token: token.content,
+        data: msg.data
+      })
+    }
+  }
+
   chrome.runtime.onConnect.addListener(function (port) {
     port.onMessage.addListener(function (msg) {
       if (pauseKnoman || token.content === '') {
         return
       }
       if (msg.search || msg.website) {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (currentTab) {
-          let tab = currentTab[0]
+        chrome.tabs.query({ active: true, currentWindow: true }, function (currentTabs) {
+          let tab = currentTabs[0]
           if (tab.incognito) {
             return
           }
-          // TODO: use openerTabId
-          // if (tab.openerTabId) {
-          //   chrome.tabs.get(tab.openerTabId, function (tabs) {
-          //     let tab = tabs[0]
-          //     tab.url
-          //   })
-          // }
-          msg.data.tab = tab
-          if (msg.search) {
-            msg.data.research = research
-            msg.data.lastURL = { ...lastURL }
-            lastSearch = {
-              query: msg.data.query,
-              timestamp: (new Date()).getTime()
-            }
-            port.postMessage({
-              onSearch: true,
-              token: token.content,
-              data: msg.data
+          msg.data.tab = { ...tab }
+          let openerTabId = tab.openerTabId
+          if (openerTabId) {
+            chrome.tabs.get(openerTabId, function (openerTab) {
+              msg.data.openerUrl = openerTab.url
+              sendToContentScript(port, msg)
             })
-            return
-          }
-          if (msg.website) {
-            msg.data.research = research
-            msg.data.search = { ...lastSearch }
-            msg.data.lastURL = { ...lastURL }
-            lastURL = {
-              content: msg.data.url,
-              timestamp: (new Date()).getTime()
-            }
-            port.postMessage({
-              onWebsite: true,
-              token: token.content,
-              data: msg.data
-            })
+          } else {
+            sendToContentScript(port, msg)
           }
         })
         return
       }
-
       if (msg.history) {
         chrome.history.getVisits({url: msg.url}, function (visitItems) {
           port.postMessage({
