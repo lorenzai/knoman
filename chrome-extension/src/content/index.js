@@ -152,5 +152,11 @@ if (typeof document.addEventListener === 'undefined' || typeof document.hidden =
   console.log('This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.')
   document.addEventListener('DOMContentLoaded', load, false)
 } else {
-  document.addEventListener(visibilityChange, handleVisibilityChange, false)
+  // Issue: if user stays in the search page and change the query, the content script won't fire since
+  // the visibility does not change
+  if (isSearchEngine(window.location.href)) {
+    document.addEventListener('DOMContentLoaded', load, false)
+  } else {
+    document.addEventListener(visibilityChange, handleVisibilityChange, false)
+  }
 }
