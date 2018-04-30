@@ -4,6 +4,7 @@
       <WebsiteList :pToken='localToken' category='websites' :limit='40' contentName='url' @show='showContents' @deleteItem='deleteWebsite'></WebsiteList>
     </div>
     <div id="right" class="contents">
+      <iframe :src="website.url" id="websiteFrame" scrolling="yes" frameborder="0" style="position: relative; height: 100%; width: 100%;"></iframe>
       <!-- <div v-for="(item, key) in websites">
         <div class="website">
           <div>
@@ -35,7 +36,9 @@ export default {
   props: ['token'],
   data () {
     return {
-      websites: []
+      websites: [],
+      website: {},
+      iframeWidth: 0
     }
   },
   computed: {
@@ -50,6 +53,7 @@ export default {
     }
   },
   mounted () {
+    this.iframeWidth = 800
     // save token to local storage so that browser refresh works
     if (this.token || this.token === '') {
       localStorage.setItem('localToken', this.localToken)
@@ -81,10 +85,9 @@ export default {
   },
   methods: {
     showContents (item) {
-
+      this.website = item
     },
     deleteWebsite (item) {
-
     }
   },
   components: {

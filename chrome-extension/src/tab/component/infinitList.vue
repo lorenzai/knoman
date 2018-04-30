@@ -18,13 +18,20 @@
     <collapse accordion>
       <div v-for="(item, key) in items">
         <collapse-item :title="(item.title || item.content) | truncate" :class="{ active: isActive[key] }">
-          <div>
-            <span>Created at {{ item.created | format }}</span> |
-            <span>Last visited at {{ item.lastVisited || item.created | format }} </span> | 
-            <span>Visited {{ item.visited }} times</span>
-          </div>
-          <div class="button" @click="deleteItem(item, key)">Delete</div>
-          <div class="button" @click="show(item, key)">Show websites</div>
+        <v-layout row d-flex justify-end>
+          <v-flex xs12 lg8 d-flex>
+            <div>
+              <span>Created at {{ item.created | format }}</span> |
+              <span>Last visited at {{ item.lastVisited || item.created | format }} </span> |
+              <span>Visited {{ item.visited }} times</span>
+            </div>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex xs12 lg4 d-flex justify-center>
+            <div class="button" @click="deleteItem(item, key)">Delete</div>
+            <div class="button" @click="show(item, key)">Show</div>
+          </v-flex>
+        </v-layout>
         </collapse-item>
       </div>
     </collapse>
