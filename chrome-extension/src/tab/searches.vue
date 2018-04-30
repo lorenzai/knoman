@@ -146,6 +146,7 @@ export default {
       console.log('Search: ' + JSON.stringify(search))
       // this.search = search
       this.isShowAside = !this.isShowAside
+      this.websites = []
       axios.get('/nodes/searches/websites', {
         headers: {
           'content-type': 'application/json; charset=utf-8',

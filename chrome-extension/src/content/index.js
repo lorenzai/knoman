@@ -105,6 +105,9 @@ function sentInfo (url) {
 }
 
 function load () {
+  if (isRecorded) {
+    return
+  }
   console.log('knoman content js started')
   init()
   // delay sending web info for 3 seconds to exclude accidental click
@@ -114,6 +117,40 @@ function load () {
   //     history: true,
   //     url: window.location.href
   // })
+  isRecorded = true
 }
 
-document.addEventListener('DOMContentLoaded', load, false)
+function unload () {
+}
+
+var isRecorded = false
+// document.addEventListener('DOMContentLoaded', load, false)
+var hidden
+var visibilityChange
+if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+  hidden = 'hidden'
+  visibilityChange = 'visibilitychange'
+} else if (typeof document.msHidden !== 'undefined') {
+  hidden = 'msHidden'
+  visibilityChange = 'msvisibilitychange'
+} else if (typeof document.webkitHidden !== 'undefined') {
+  hidden = 'webkitHidden'
+  visibilityChange = 'webkitvisibilitychange'
+}
+
+function handleVisibilityChange () {
+  if (document[hidden]) {
+    // TODO: do something when user leaves the page?
+    unload()
+  } else {
+    load()
+  }
+}
+
+// Warn if the browser doesn't support addEventListener or the Page Visibility API
+if (typeof document.addEventListener === 'undefined' || typeof document.hidden === 'undefined') {
+  console.log('This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.')
+  document.addEventListener('DOMContentLoaded', load, false)
+} else {
+  document.addEventListener(visibilityChange, handleVisibilityChange, false)
+}
