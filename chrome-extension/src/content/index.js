@@ -140,7 +140,6 @@ if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and 
 
 function handleVisibilityChange () {
   if (document[hidden]) {
-    // TODO: do something when user leaves the page?
     unload()
   } else {
     load()
@@ -152,11 +151,11 @@ if (typeof document.addEventListener === 'undefined' || typeof document.hidden =
   console.log('This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.')
   document.addEventListener('DOMContentLoaded', load, false)
 } else {
-  // Issue: if user stays in the search page and change the query, the content script won't fire since
-  // the visibility does not change
-  if (isSearchEngine(window.location.href)) {
-    document.addEventListener('DOMContentLoaded', load, false)
-  } else {
+  // If it is hidden, run content script when it becomes active
+  // If it is already active, run script after the DOM content is loaded
+  if (document[hidden]) {
     document.addEventListener(visibilityChange, handleVisibilityChange, false)
+  } else {
+    document.addEventListener('DOMContentLoaded', load, false)
   }
 }
