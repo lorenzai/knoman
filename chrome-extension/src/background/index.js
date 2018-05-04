@@ -175,23 +175,27 @@ function init () {
   })
   chrome.webRequest.onHeadersReceived.addListener(
     function (details) {
-      for (var i = 0; i < details.responseHeaders.length; ++i) {
-        if (details.responseHeaders[i].name.toLowerCase() === 'x-frame-options' ||
-          details.responseHeaders[i].name.toLowerCase() === 'content-security-policy') {
-          details.responseHeaders.splice(i, 1)
+      var headers = details.responseHeaders
+      for (var i = 0; i < headers.length; ++i) {
+        var header = headers[i].name.toLowerCase()
+        if (header === 'x-frame-options' || header === 'frame-options' || header === 'content-security-policy') {
+          headers.splice(i, 1)
         }
-        // if (details.responseHeaders[i].name.toLowerCase() === 'content-security-policy') {
-        //   let newValue = details.responseHeaders[i].value.replace('frame-ancestors "none";', '')
-        //   details.responseHeaders[i].value = newValue
+        // if (header === 'content-security-policy') {
+        //   var newValue = headers[i].value
+        //   newValue = newValue.replace('frame-ancestors "none";', '')
+        //   headers[i].value = newValue
         // }
       }
       return {
-        responseHeaders: details.responseHeaders
+        responseHeaders: headers
       }
-    }, {
+    },
+    {
       urls: ['<all_urls>'],
       types: ['main_frame', 'sub_frame', 'stylesheet', 'script', 'image', 'object', 'xmlhttprequest', 'other']
-    }, ['blocking', 'responseHeaders']
+    },
+    ['blocking', 'responseHeaders']
   )
 }
 

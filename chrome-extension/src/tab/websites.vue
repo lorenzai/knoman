@@ -4,7 +4,7 @@
       <WebsiteList :pToken='localToken' category='websites' :limit='40' contentName='url' @show='showContents' @deleteItem='deleteWebsite'></WebsiteList>
     </div>
     <div id="right" class="contents">
-      <iframe :src="website.url" id="websiteFrame" scrolling="yes" frameborder="0" style="position: relative; height: 100%; width: 100%;"></iframe>
+      <iframe :src="website.url" id="websiteFrame" scrolling="yes" frameborder="0" style="position: relative; height: 100%; width: 100%;" sandbox="allow-scripts allow-forms allow-popups allow-same-origin"></iframe>
       <!-- <div v-for="(item, key) in websites">
         <div class="website">
           <div>
