@@ -11,6 +11,7 @@ let resolve = (dir) => path.join(rootDir, 'src', dir)
 
 module.exports = {
   entry: {
+    inject: resolve('./inject'),
     popup: resolve('./popup'),
     tab: resolve('./tab'),
     options: resolve('./options'),
@@ -88,6 +89,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['*'], { root: path.join(rootDir, 'dist') }),
     // Customize your extension structure.
+    htmlPage('actionFrame', 'actionFrame', ['manifest', 'vendor', 'inject'], path.resolve(__dirname, '../src/inject/index.ejs')),
     htmlPage('knoman', 'knoman', ['manifest', 'vendor', 'tab']),
     htmlPage('popup', 'popup', ['manifest', 'vendor', 'popup']),
     htmlPage('options', 'options', ['manifest', 'vendor', 'options']),

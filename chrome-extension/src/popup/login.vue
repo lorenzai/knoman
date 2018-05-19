@@ -132,7 +132,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .login {
   padding: 16px 0 16px 0;
 }

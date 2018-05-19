@@ -47,12 +47,21 @@ module.exports = {
       'js/vendor.js',
       'js/content.js'
     ],
+    css: [
+      'styles/knomanInject.css'
+    ],
     run_at: 'document_start',
     matches: ['<all_urls>'],
     all_frames: false
   }],
   content_security_policy: "script-src 'self'; object-src 'self'",
   web_accessible_resources: [
+    'pages/actionFrame.html',
+    'js/inject.js',
+    // 'js/iframeResizer.min.js',
+    // 'js/vendor.js',
+    // 'js/manifest.js',
+    'styles/knomanInject.css',
     'js/content.js'
   ]
 }

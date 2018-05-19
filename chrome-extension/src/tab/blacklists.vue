@@ -8,7 +8,7 @@
 export default {
   data () {
     return {
-      message: 'blacklists feature is coming ...'
+      message: 'Under construction ...'
     }
   }
 }

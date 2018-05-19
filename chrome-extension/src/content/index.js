@@ -1,7 +1,11 @@
 import * as $ from 'jquery'
 // import config from './config'
 import config from '../ext/constants'
+// import iFrameResize from 'iframe-resizer'
 
+var nodeType = 'website'
+var token = ''
+var nodeData = ''
 const port = chrome.runtime.connect()
 const REST_API_BASE = config.REST_API_BASE
 
@@ -16,13 +20,53 @@ function getParameterByName (url, name) {
 }
 
 function init () {
+  window.addEventListener('message', function (event) {
+    if (event.data.type && (event.data.type === 'FROM_ACTION')) {
+      let content = {}
+      switch (event.data.text) {
+        case 'poor':
+          console.log('poor')
+          content.feedback = 'poor'
+          break
+        case 'good':
+          content.feedback = 'good'
+          break
+        case 'favorite':
+          content.feedback = 'favorite'
+          break
+      }
+      if (nodeType === 'website') {
+        content.url = nodeData.url
+      } else {
+        content.query = nodeData.query
+      }
+      let data = JSON.stringify(content)
+      console.log('patch:' + JSON.stringify(content))
+      $.ajax({
+        type: 'patch',
+        url: REST_API_BASE + '/node/' + nodeType,
+        dataType: 'json',
+        headers: {
+          authorization: 'JWT ' + token
+        },
+        contentType: 'application/json; charset=utf-8',
+        data: data,
+        success: function (data) {},
+        failure: function (errMsg) {
+          console.error(errMsg)
+        }
+      })
+    }
+  })
   port.onMessage.addListener(function (msg) {
     if (msg.onWebsite || msg.onSearch) {
-      let endpoint = '/search'
-      if (msg.onWebsite) {
-        endpoint = '/website'
-      }
+      let endpoint = msg.onWebsite ? '/website' : '/search'
+      // save info
+      nodeType = msg.onWebsite ? 'website' : 'search'
+      token = msg.token
+      nodeData = msg.data
       console.log(msg.data)
+
       $.ajax({
         type: 'POST',
         url: REST_API_BASE + '/node' + endpoint,
@@ -104,6 +148,65 @@ function sentInfo (url) {
   })
 }
 
+function injectActionFrame () {
+  var f = document.createElement('iframe')
+  f.id = 'actionFrame'
+  f.name = 'actionFrame'
+  f.src = chrome.extension.getURL('pages/actionFrame.html')
+  f.allowtransparency = 'true'
+  f.scrolling = 'no'
+  f.frameBorder = '0'
+  f.border = 'none'
+  f.sandbox = 'allow-scripts allow-forms allow-popups allow-same-origin'
+  f.style.cssText = `
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 250px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-sizing: border-box;
+    border: 2px solid #4CAF50;
+    transition: 0.5s;
+    z-index:2147483640;
+  `
+
+  var a = document.createElement('input')
+  a.id = 'knomanButton'
+  a.type = 'button'
+  a.value = 'Knoman    \u002B'
+  a.onclick = function () {
+    var fr = f
+    var button = a
+    var frame = document.getElementById('actionFrame')
+    if (frame) {
+      frame.parentNode.removeChild(frame)
+      button.value = 'Knoman    \u002B'
+    } else {
+      button.value = '\u2212'
+      document.body.appendChild(fr)
+    }
+  }
+  a.style.cssText = `
+    size: 15px;
+    width: 250px;
+    height: 34px;
+    text-align: right;
+    background-color: #4CAF50;
+    box-sizing: border-box;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    position: fixed;
+    bottom: 244px;
+    right: 0;
+    transition: 0.5s;
+    border: 0.5px solid #4CAF50;
+    z-index:2147483647;
+  `
+  document.body.appendChild(a)
+}
+
 function load () {
   if (isRecorded) {
     return
@@ -118,13 +221,14 @@ function load () {
   //     url: window.location.href
   // })
   isRecorded = true
+  injectActionFrame()
 }
 
 function unload () {
 }
 
-var isRecorded = false
 // document.addEventListener('DOMContentLoaded', load, false)
+var isRecorded = false
 var hidden
 var visibilityChange
 if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
